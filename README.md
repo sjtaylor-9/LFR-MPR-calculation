@@ -26,7 +26,7 @@ bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/" "path/t
 
 The ```python``` scripts can also be run individually, noting that an individual set of arguments must be passed in the command line when running. The necessary arguments can be found in the ```parse_arguments()``` function of each script.
 
-**Warnings:**\
+**Warnings:**
 - Due to the way that the scripts are set-up to read in the neutron flux spectra these must all be stored in the same local folder. The same is true for the ```Lib80x```, ```ace_900```, and ```tendl19c``` folders for the public JEFF, ENDF, and TENDL data sets, respectively.
 - If the neutron flux spectra and public cross-section data files are stored in the newcleo OneDrive then the file directories must be given to the ```.sh``` script in "" so that the command line ignores the whitespaces in the directory.
 
@@ -35,8 +35,8 @@ The data containing the JEFF 3.3 reaction cross-sections can be downloaded from 
 The data containing the ENDF reaction cross-sections can be downloaded from this link: https://nucleardata.lanl.gov/lib/Lib80x.zip
 The data containing thr TENDL reaction cross-sections can be downloaded from this link: https://tendl.web.psi.ch/tendl_2019/tar_files/tendl19c.tar.bz2
 
-**Warnings:**\
-The the full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900~K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
+**Warnings:**
+- The the full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900~K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
 
 # Authors
 These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
