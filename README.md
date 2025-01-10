@@ -24,7 +24,7 @@ Here is an example of how to run ```MPR_generation.sh```:
 bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/Neutron_spectra" "path/to/folder/with/public/cross/section/data/ENDF_JEFF_TENDL_Reaction_data"
 ```
 
-The ```python``` scripts can also be run individually, noting that an individual set of arguments must be passed in the command line when running. The necessary arguments can be found in the ```parse_arguments()``` function of each script.
+The ```python``` scripts can also be run individually, noting that an individual set of arguments must be passed in the command line when running. The necessary arguments can be found in the ```parse_arguments()``` function of each script.\
 **Warnings**
 
 # Authors
