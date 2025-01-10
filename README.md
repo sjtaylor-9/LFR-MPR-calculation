@@ -3,9 +3,9 @@ This repository contains the necessary scripts to generate the MPR files needed 
 
 ## How to use
 In order to run these scripts a conda environment with the following packages is required:
-```numpy```,
-```pandas```,
-
+```numpy```,\
+```pandas```,\
+```endf```.
 
 # Authors
 These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
