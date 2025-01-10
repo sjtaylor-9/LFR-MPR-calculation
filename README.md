@@ -20,10 +20,10 @@ This repository is designed so that the user can enter one command into the term
 - The path directory to the local folder containing all of the public ENDF/JEFF/TENDL cross-section data.
 
 Here is an example of how to run ```MPR_generation.sh```:
-```bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/Neutron_spectra" "path/to/folder/with/public/cross/section/data/ENDF_JEFF_TENDL_Reaction_data"
+```bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/Neutron_spectra" "path/to/folder/with/public/cross/section/data/ENDF_JEFF_TENDL_Reaction_data"```
 
-
-The ```python``` scripts can be run individually, noting that an individual set of arguments must be passed in the command line when running. 
+The ```python``` scripts can also be run individually, noting that an individual set of arguments must be passed in the command line when running. The necessary arguments can be found in the ```parse_arguments()``` function of each script.
+**Warnings**
 
 # Authors
 These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
