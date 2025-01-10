@@ -1,5 +1,5 @@
 # Production of LFR-AS-200 and LFR-AS-30 MPRs to be used in newcleo ORION simulations
-This repository contains the necessary scripts to generate the MPR files needed to run ORION simulations of newcleo's LFR-AS-200 and LFR-AS-30 nuclear fuel cycles. The MPR's generated are based on 2024 neutron spectra, which for the LFR-AS-200 is 3 enrichment zones (inner, middle, outer) and 2 burnup steps corresponding to the Beginning of Cycle, BoC, and the End of Cycle, EoC. For the LFR-AS-30 the scripts used a single enrichment zone (denoted as Fuel Assembly, FA) and a single burnup step (denoted as single).
+This repository contains the necessary scripts to generate the MPR files needed to run ORION simulations of newcleo's LFR-AS-200 and LFR-AS-30 nuclear fuel cycles. The MPR's generated are based on 2024 neutron spectra, which for the LFR-AS-200 is three enrichment zones (inner, middle, outer) and two burnup steps corresponding to the Beginning of Cycle, BoC, and the End of Cycle, EoC. For the LFR-AS-30 the scripts used a single enrichment zone (denoted as Fuel Assembly, FA) and a single burnup step (denoted as single).
 
 ## How to download
 In order to download this repository the following should be entered into the command line terminal:
@@ -12,9 +12,15 @@ git pull origin main
 ```
 
 ## How to use
-In order to run these scripts a ```conda``` environment with the following packages is required: ```numpy```, ```pandas``` and ```endf```. These can be installed in the command line using either ```pip install $x$``` or if ```mamba install -c conda-forge $x$```, where $x$ is the name of the ```python``` library.
+In order to run these scripts a ```conda``` environment with the following packages is required: ```numpy```, ```pandas``` and ```endf```. These can be installed in the command line using either ```pip install endf``` or ```mamba install -c conda-forge endf```, replacing ```endf``` with the respective library name.
 
-This repository is designed so that the user can enter one command into the terminal and all the cross-section data and MPRs will be generated without any need to change the ```python``` logic. This is done by calling a ```shell``` script with ```bash``` in the terminal.
+This repository is designed so that the user can enter one command into the terminal and all the cross-section data and MPRs will be generated without any need to change the ```python``` logic. This is done by calling a ```shell``` script with ```bash``` in the terminal. When running ```MPR_generation.sh```, three arguments are required. These are:
+- The path directory where the output folders/files should be written to,
+- The path directory to the local folder containing all of the internal newcleo data, i.e. the neutron flux spectra,
+- The path directory to the local folder containing all of the public ENDF/JEFF/TENDL cross-section data.
+
+Here is an example of how to run ```MPR_generation.sh```:
+```bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/Neutron_spectra" "path/to/folder/with/public/cross/section/data/ENDF_JEFF_TENDL_Reaction_data"
 
 
 The ```python``` scripts can be run individually, noting that an individual set of arguments must be passed in the command line when running. 
