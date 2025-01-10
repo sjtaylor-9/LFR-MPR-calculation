@@ -26,8 +26,12 @@ bash MPR_generation.sh MPR_Outputs "path/to/folder/with/neutron/fluxes/" "path/t
 
 The ```python``` scripts can also be run individually, noting that an individual set of arguments must be passed in the command line when running. The necessary arguments can be found in the ```parse_arguments()``` function of each script.
 
-**Warnings:**
-Due to the way that the scripts are set-up to read in the neutron flux spectra these must all be stored in the same local folder. The same is true for the ```Lib80x```, ```ace_900```, and ```tendl19c``` folders for the public JEFF, ENDF, and TENDL data sets, respectively. If the neutron flux spectra and public cross-section data files are stored in the newcleo OneDrive then the file directories must be given to the ```.sh``` script in "" so that the command line ignores the whitespaces in the directory.
+**Warnings:**\
+- Due to the way that the scripts are set-up to read in the neutron flux spectra these must all be stored in the same local folder. The same is true for the ```Lib80x```, ```ace_900```, and ```tendl19c``` folders for the public JEFF, ENDF, and TENDL data sets, respectively.
+- If the neutron flux spectra and public cross-section data files are stored in the newcleo OneDrive then the file directories must be given to the ```.sh``` script in "" so that the command line ignores the whitespaces in the directory.
+
+## Cross-section libraries
+The data containing the JEFF 3.3 reaction cross-sections can be downloaded from this link: https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/temperatures/ace_900.tar.gz 
 
 # Authors
 These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
