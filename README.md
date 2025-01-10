@@ -31,12 +31,13 @@ The ```python``` scripts can also be run individually, noting that an individual
 - If the neutron flux spectra and public cross-section data files are stored in the newcleo OneDrive then the file directories must be given to the ```.sh``` script in "" so that the command line ignores the whitespaces in the directory.
 
 ## Cross-section libraries
-The data containing the JEFF 3.3 reaction cross-sections can be downloaded from this link: https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/temperatures/ace_900.tar.gz
-The data containing the ENDF reaction cross-sections can be downloaded from this link: https://nucleardata.lanl.gov/lib/Lib80x.zip
-The data containing thr TENDL reaction cross-sections can be downloaded from this link: https://tendl.web.psi.ch/tendl_2019/tar_files/tendl19c.tar.bz2
+The download links for the reaction cross-sections within each of the public libraries are: 
+- The data containing the JEFF 3.3 reaction cross-sections can be downloaded from this link: https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/temperatures/ace_900.tar.gz
+- The data containing the ENDF reaction cross-sections can be downloaded from this link: https://nucleardata.lanl.gov/lib/Lib80x.zip
+- The data containing thr TENDL reaction cross-sections can be downloaded from this link: https://tendl.web.psi.ch/tendl_2019/tar_files/tendl19c.tar.bz2
 
 **Warnings:**
-- The the full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900~K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
+- The the full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
 
 # Authors
 These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
