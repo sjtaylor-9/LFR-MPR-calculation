@@ -10,11 +10,13 @@ Since, the neutron spectra are grouped in energy bins, this integral is calculat
 The code reads in the respetive list of ENDF, JEFF, or TENDL reactions and assigns them to a numpy array. It loops through each row of the array and for each reaction calculates the one-group cross-section and appends it to a new list along with the parent ZAID, reaction ID, and daughter ZAID.
 Firstly, the energy-dependent cross-section is grouped into the same energy binning scheme as used for the neutron flux spectra. If a bin contains no data, then the script interpolates the cross-sections using data either side.
 Then, the one-group cross-section for the bin is calculated using the defined equation.
+The daughter nuclides are found by reading in the list of reactions with the NNL example MPR and extracting the daughter ZAID for the relevant reaction. This is done as the ENDF/JEFF/TENDL libraries do not specify if the daughter nuclide is metastable or not; hence, the only way to deduce this is to check to see if the daughter is metastable in the NNL list.
+If the reaction does not exist in the NNL database, then the daughter nuclide is assumed to be a ground state nuclide and calculated manually.
 
 The one-group cross-sections for all reactions are stored within a .csv file.
 
 Authors: Michael Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com)
-Last Edited: 10/01/2025
+Last Edited: 12/01/2025
 """
 # ---------  Import Libraries  --------- #
 import numpy as np
@@ -191,7 +193,7 @@ def get_neutron_spectrum():
 
     return neutronspec_bin_edges, num_energy_bins, central_value_neutron_flux
 
-def get_jeff_reaction_xs(bin_edges, num_bins, neutron_flux):
+def get_jeff_reaction_xs(bin_edges, num_bins, neutron_flux, nnl_parents, nnl_reactions, nnl_daughters):
     """
     This function finds the JEFF 3.3 reactions to be used within the MPR file and outputs the one-group cross-section for each of these reactions.
     The energy dependent cross-sections are stored within the .ACE files and so are read in from the user's local storage using the cross_section_data parser.
@@ -287,6 +289,14 @@ def get_jeff_reaction_xs(bin_edges, num_bins, neutron_flux):
                     grouped_xs[i] = 0.5 * (grouped_xs[i - lb] + grouped_xs[i + ub])
             if(np.sum(np.isnan(grouped_xs)) == 0): any_nan = 0
 
+        # Get daughter ZAIs from NNL MPR file
+        nnl_found = 0
+        for i in range(len(nnl_parents)):
+            if (nnl_found == 1): break
+            if ((nnl_parents[i] == parent_ZAI) & (nnl_reactions[i] == test_reaction_id)):
+                nnl_found = 1
+                daughter_ZAI = nnl_daughters[i]
+        
         prod_sum = 0
         flux_sum = 0
         for i in range(len(grouped_xs)):
@@ -294,29 +304,30 @@ def get_jeff_reaction_xs(bin_edges, num_bins, neutron_flux):
             prod_sum += grouped_xs[i] * neutron_flux[i]
             flux_sum += neutron_flux[i]
 
-
-        if test_reaction_id == 16:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 1
-        if test_reaction_id == 17:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 2
-        if test_reaction_id == 102:
-            daughter_Z = parent_Z
-            daughter_A = parent_A + 1
-        if test_reaction_id == 103:
-            daughter_Z = parent_Z - 1
-            daughter_A = parent_A
-        if test_reaction_id == 18:
-            daughter_Z = 0
-            daughter_A = 0
-        daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
+        # If the reaction doesn't exist in the NNL database then the daughter ZAID is calculated manually 
+        if(nnl_found == 0):
+            if test_reaction_id == 16:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 1
+            if test_reaction_id == 17:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 2
+            if test_reaction_id == 102:
+                daughter_Z = parent_Z
+                daughter_A = parent_A + 1
+            if test_reaction_id == 103:
+                daughter_Z = parent_Z - 1
+                daughter_A = parent_A
+            if test_reaction_id == 18:
+                daughter_Z = 0
+                daughter_A = 0
+            daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
         #print("%i,%i,%i,%.5e" % (parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum/flux_sum)))
         jeff_cross_sections.append([parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum / flux_sum)])
 
     return jeff_cross_sections
 
-def get_endf_reaction_xs(bin_edges, num_bins, neutron_flux):
+def get_endf_reaction_xs(bin_edges, num_bins, neutron_flux, nnl_parents, nnl_reactions, nnl_daughters):
     """
     This function finds the ENDF reactions that are not in JEFF 3.3 to be used within the MPR file and outputs the one-group cross-section for each of these reactions.
     The energy dependent cross-sections are stored within the .ACE files and so are read in from the user's local storage using the cross_section_data parser.
@@ -410,6 +421,14 @@ def get_endf_reaction_xs(bin_edges, num_bins, neutron_flux):
                     grouped_xs[i] = 0.5 * (grouped_xs[i - lb] + grouped_xs[i + ub])
             if(np.sum(np.isnan(grouped_xs)) == 0): any_nan = 0   
 
+        # Get daughter ZAIs from NNL MPR file
+        nnl_found = 0
+        for i in range(len(nnl_parents)):
+            if (nnl_found == 1): break
+            if ((nnl_parents[i] == parent_ZAI) & (nnl_reactions[i] == test_reaction_id)):
+                nnl_found = 1
+                daughter_ZAI = nnl_daughters[i]
+        
 
         prod_sum = 0
         flux_sum = 0
@@ -418,29 +437,30 @@ def get_endf_reaction_xs(bin_edges, num_bins, neutron_flux):
             prod_sum += grouped_xs[i] * neutron_flux[i]
             flux_sum += neutron_flux[i]
 
-
-        if test_reaction_id == 16:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 1
-        if test_reaction_id == 17:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 2
-        if test_reaction_id == 102:
-            daughter_Z = parent_Z
-            daughter_A = parent_A + 1
-        if test_reaction_id == 103:
-            daughter_Z = parent_Z - 1
-            daughter_A = parent_A
-        if test_reaction_id == 18:
-            daughter_Z = 0
-            daughter_A = 0
-        daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
+        # If the reaction doesn't exist in the NNL database then the daughter ZAID is calculated manually 
+        if(nnl_found == 0):
+            if test_reaction_id == 16:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 1
+            if test_reaction_id == 17:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 2
+            if test_reaction_id == 102:
+                daughter_Z = parent_Z
+                daughter_A = parent_A + 1
+            if test_reaction_id == 103:
+                daughter_Z = parent_Z - 1
+                daughter_A = parent_A
+            if test_reaction_id == 18:
+                daughter_Z = 0
+                daughter_A = 0
+            daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
         #print("%i,%i,%i,%.5e" % (parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum / flux_sum)))
         endf_cross_sections.append([parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum / flux_sum)])
 
     return endf_cross_sections
 
-def get_tendl_reaction_xs(bin_edges, num_bins, neutron_flux):
+def get_tendl_reaction_xs(bin_edges, num_bins, neutron_flux, nnl_parents, nnl_reactions, nnl_daughters):
     """
     This function finds the TENDL (2019) reactions that are not in JEFF 3.3 or ENDF to be used within the MPR file and outputs the one-group cross-section for each of these reactions.
     The energy dependent cross-sections are stored within the .ACE files and so are read in from the user's local storage using the cross_section_data parser.
@@ -537,6 +557,13 @@ def get_tendl_reaction_xs(bin_edges, num_bins, neutron_flux):
                     grouped_xs[i] = 0.5 * (grouped_xs[i - lb] + grouped_xs[i + ub])
             if(np.sum(np.isnan(grouped_xs)) == 0): any_nan = 0   
 
+        # Get daughter ZAIs from NNL MPR file
+        nnl_found = 0
+        for i in range(len(nnl_parents)):
+            if (nnl_found == 1): break
+            if ((nnl_parents[i] == parent_ZAI) & (nnl_reactions[i] == test_reaction_id)):
+                nnl_found = 1
+                daughter_ZAI = nnl_daughters[i]
 
         prod_sum = 0
         flux_sum = 0
@@ -545,23 +572,24 @@ def get_tendl_reaction_xs(bin_edges, num_bins, neutron_flux):
             prod_sum += grouped_xs[i] * neutron_flux[i]
             flux_sum += neutron_flux[i]
 
-
-        if test_reaction_id == 16:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 1
-        if test_reaction_id == 17:
-            daughter_Z = parent_Z
-            daughter_A = parent_A - 2
-        if test_reaction_id == 102:
-            daughter_Z = parent_Z
-            daughter_A = parent_A + 1
-        if test_reaction_id == 103:
-            daughter_Z = parent_Z - 1
-            daughter_A = parent_A
-        if test_reaction_id == 18:
-            daughter_Z = 0
-            daughter_A = 0
-        daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
+        # If the reaction doesn't exist in the NNL database then the daughter ZAID is calculated manually 
+        if(nnl_found == 0):
+            if test_reaction_id == 16:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 1
+            if test_reaction_id == 17:
+                daughter_Z = parent_Z
+                daughter_A = parent_A - 2
+            if test_reaction_id == 102:
+                daughter_Z = parent_Z
+                daughter_A = parent_A + 1
+            if test_reaction_id == 103:
+                daughter_Z = parent_Z - 1
+                daughter_A = parent_A
+            if test_reaction_id == 18:
+                daughter_Z = 0
+                daughter_A = 0
+            daughter_ZAI = (daughter_Z * 10000) + (daughter_A * 10)
         #print("%i,%i,%i,%.5e" % (parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum / flux_sum)))
         tendl_cross_sections.append([parent_ZAI, test_reaction_id, daughter_ZAI, (prod_sum / flux_sum)])
 
@@ -626,13 +654,18 @@ def save_results(jeff_xs, endf_xs, tendl_xs):
 # -------------  Main Code  ------------ #
 args = parse_arguments()
 
+NNL_file_reactions = genfromtxt(f'{args.reaction_data}/NNLMPR_allreactions.csv', delimiter =',')
+NNL_parents = NNL_file_reactions[1:, 0]
+NNL_reactionids = NNL_file_reactions[1:, 1]
+NNL_daughters = NNL_file_reactions[1:, 2]
+
 neutronspec_edges, n_energy_bins, neutronspec_central = get_neutron_spectrum()
 print(f"Calculating the cross-sectional data for the JEFF reactions")
-jeff_data = get_jeff_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central)
+jeff_data = get_jeff_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central, NNL_parents, NNL_reactionids, NNL_daughters)
 print(f"Calculating the cross-sectional data for the ENDF reactions")
-endf_data = get_endf_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central)
+endf_data = get_endf_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central, NNL_parents, NNL_reactionids, NNL_daughters)
 print(f"Calculating the cross-sectional data for the TENDL reactions")
-tendl_data = get_tendl_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central)
+tendl_data = get_tendl_reaction_xs(neutronspec_edges, n_energy_bins, neutronspec_central, NNL_parents, NNL_reactionids, NNL_daughters)
 
 save_results(jeff_data, endf_data, tendl_data)
 print(f"Calculated the cross-sectional data for the {args.reactor} in the enrichment zone: {args.enrichment_zone} at the {args.burnup} burnup step")
