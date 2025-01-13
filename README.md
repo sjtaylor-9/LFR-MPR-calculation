@@ -41,7 +41,7 @@ The download links for the reaction cross-sections within each of the public lib
 - The the full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
 
 # Authors
-These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 10/01/2025
+These scripts were produced and developed by Micahel Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com) **Last modified:** 13/01/2025
 
 
 
