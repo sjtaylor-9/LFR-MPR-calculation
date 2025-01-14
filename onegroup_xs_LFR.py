@@ -15,6 +15,7 @@ If the reaction does not exist in the NNL database, then the daughter nuclide is
 
 The one-group cross-sections for all reactions are stored within a .csv file.
 
+A description of how to use the scripts is given in the README of this repo: https://github.com/sjtaylor-9/LFR-MPR-calculation.git
 Authors: Michael Weekes (michael.weekes@newcleo.com) and Sam Taylor (sam.taylor@newcleo.com)
 Last Edited: 12/01/2025
 """
