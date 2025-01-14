@@ -5,6 +5,7 @@ This code is responsible for finding the ZAIDs of the parent and daughter nuclid
 In addition, the ORION IDs NumberParents, and NumberReactions are also written to the .csv file. These are also all neded for the MPR file.
 The code calculates the parent/daughter ZAIDs for each nuclide and then determines if these exist in both the ENDF/JEFF/TENDL and ORION databases. All of the reaction information for the nuclide is then appended to a dictionary and written to a .csv file using pandas, once all nuclides that exist in both the ENDF/JEFF/TENDL and ORION databases have been examined.
 
+A description of how to use the scripts is given in the README of this repo: https://github.com/sjtaylor-9/LFR-MPR-calculation.git
 Author: Sam Taylor (sam.taylor@newcleo.com)
 Last Edited: 10/01/2025
 """
