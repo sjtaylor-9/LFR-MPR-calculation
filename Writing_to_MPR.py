@@ -5,6 +5,7 @@ This code is responsible for outputting the nuclide information and reaction cro
 This is done by loading the ZAIDs of the parent/daughter nuclides from a .csv, the cross-sections of each reaction from a .csv, and the ORION IDs of the all the nuclides from a .xlsx. These are all stored as numpy arrays or pandas dataframes.
 The code first sorts the pandas dataframe containing the nuclide information into ascending ORION IDs and then iterates through each row of the dataframe and writes all the information into the .txt file.
 
+A description of how to use the scripts is given in the README of this repo: https://github.com/sjtaylor-9/LFR-MPR-calculation.git
 Author: Sam Taylor (sam.taylor@newcleo.com)
 Last Edited: 13/01/2025
 """
