@@ -2,6 +2,8 @@
 # For loops are used to run through each enrichment zone and burnup combination.
 # 3 command line inputs are necessary for the script to find the relevant input files. The first should be the directory which to output the one-group cross-sections and MPRs too.
 # Secondly, the directory to find the internal LFR neutron spectra. Finally, the directory to find the public ENDF/JEFF/TENDL reaction data. These last two sets of data aren't stored on the GitHub so the directories must be supplied when running. If these files are stored in the newcleo Onedrive then when entered into the command line should be entered into "" so that bash ignores the whitespaces.
+
+# A description of how to use the scripts is given in the README of this repo: https://github.com/sjtaylor-9/LFR-MPR-calculation.git
 output_directory=$1
 neutron_spectra_dir=$2
 endf_jeff_data_dir=$3
