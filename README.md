@@ -35,7 +35,7 @@ The ```python``` scripts can also be run individually, noting that an individual
 The download links for the reaction cross-sections within each of the public libraries are: 
 - The data containing the JEFF 3.3 reaction cross-sections can be downloaded from this link: https://www.oecd-nea.org/dbdata/jeff/jeff33/downloads/temperatures/ace_900.tar.gz
 - The data containing the ENDF reaction cross-sections can be downloaded from this link: https://nucleardata.lanl.gov/lib/Lib80x.zip
-- The data containing thr TENDL reaction cross-sections can be downloaded from this link: https://tendl.web.psi.ch/tendl_2019/tar_files/tendl19c.tar.bz2
+- The data containing the TENDL reaction cross-sections can be downloaded from this link: https://tendl.web.psi.ch/tendl_2019/tar_files/tendl19c.tar.bz2
 
 **Warnings:**
 - The full unzipped ```Lib80x``` folder containing ENDF data is approximately 20 GB; however, only the ```.ACE``` files within the ```Lib80x``` folder containing the ```.02c``` file extension are needed. This is because these files correlate to a temperature of 900K, which is approximately the temperature of the core. Hence, the rest can be deleted, resulting in a folder of size of 6 GB. Also, some of the file names are incorrectly named, these must unfortunately be manually corrected.
